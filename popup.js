@@ -18,19 +18,33 @@ chrome.storage.sync.get('color', function(data) {
   changeColor.setAttribute('value', data.color);
 });
 */
+//var currentPage=20;
 
-let currentPage = document.getElementById('Bookmark_save');
+//var currentPage = document.getElementById('pagenum').value;
 
 Bookmark_load.onclick = function(element) {
+/*
   chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
     chrome.tabs.executeScript(
-		tabs[0].id,
-        {code:'let current_url = tabs[0].url;let bookmark = current_url+ "#page=" + currentPage;window.open(bookmark);'});
+		tabs[0],
+        {code:'let bookmark = tabs.url+ "#page=" + currentPage;console.log(bookmark);window.open(bookmark.toString());'});
   });
+*/
+var currentPage = document.getElementById('pagenum').value;
+
+chrome.tabs.query({
+  active: true,
+  currentWindow: true
+}, ([currentTab]) => {
+  console.log(currentTab.url);
+  let bookmark = currentTab.url+ "#page=" + currentPage;
+  window.open(bookmark.toString());
+});
 };
 
 /*
 test.onclick = function(element) {
+	window.open("http://stackoverflow.com/");
 	chrome.browserAction.onClicked.addListener(function(activeTab){
 		var newURL = "http://stackoverflow.com/";
 		chrome.tabs.create({ url: newURL });
