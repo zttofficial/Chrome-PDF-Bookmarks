@@ -1,5 +1,7 @@
 # Chrome-PDF-Bookmarks
-Add bookmarks to the native Chrome PDF viewer
+Add bookmarks to the native Chrome PDF viewer.
+
+No more ideas about new chrome extensions at the moment, so I didn't pay the registration fee to become a developer. Please download the .crx file from **Releases** for local installation.
 
 
 
