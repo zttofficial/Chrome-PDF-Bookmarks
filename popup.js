@@ -20,7 +20,11 @@ chrome.storage.sync.get('color', function(data) {
 */
 //var currentPage=20;
 
-//var currentPage = document.getElementById('pagenum').value;
+Bookmark_save.onclick = function(element) {
+var currentPage = document.getElementById('pagenum').value;
+chrome.storage.sync.set({'pagenum': currentPage}, function() {
+});
+}
 
 Bookmark_load.onclick = function(element) {
 /*
@@ -30,16 +34,18 @@ Bookmark_load.onclick = function(element) {
         {code:'let bookmark = tabs.url+ "#page=" + currentPage;console.log(bookmark);window.open(bookmark.toString());'});
   });
 */
-var currentPage = document.getElementById('pagenum').value;
-
-chrome.tabs.query({
-  active: true,
-  currentWindow: true
-}, ([currentTab]) => {
-  console.log(currentTab.url);
-  let bookmark = currentTab.url+ "#page=" + currentPage;
-  window.open(bookmark.toString());
+chrome.storage.sync.get('pagenum', function(result) {
+    var currentPage=result.pagenum;
+	chrome.tabs.query({
+		active: true,
+		currentWindow: true
+		}, ([currentTab]) => {
+			console.log(currentTab.url);
+			let bookmark = currentTab.url+ "#page=" + currentPage;
+			window.open(bookmark.toString());
 });
+});
+
 };
 
 /*
