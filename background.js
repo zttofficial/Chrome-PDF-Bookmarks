@@ -1,14 +1,18 @@
-chrome.runtime.onInstalled.addListener(function() {
-  chrome.storage.sync.set({color: '#3aa757'}, function() {
-    console.log('The color is green.');
-  });
-  chrome.declarativeContent.onPageChanged.removeRules(undefined, function() {
-    chrome.declarativeContent.onPageChanged.addRules([{
-      conditions: [new chrome.declarativeContent.PageStateMatcher({
-        pageUrl: {hostEquals: 'developer.chrome.com'},
-      })
-      ],
-          actions: [new chrome.declarativeContent.ShowPageAction()]
-    }]);
-  });
+// Background service worker for Chrome PDF Bookmarks extension
+
+chrome.runtime.onInstalled.addListener(() => {
+  console.log('Chrome PDF Bookmarks extension installed/updated');
+});
+
+// Handle messages from content script or popup
+chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+  if (request.action === 'pageChanged') {
+    // Store current page information
+    if (sender.tab) {
+      chrome.storage.local.set({
+        [`currentPage_${sender.tab.id}`]: request.page
+      });
+    }
+  }
+  return true;
 });

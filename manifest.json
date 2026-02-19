@@ -1,29 +1,43 @@
 {
   "name": "Chrome PDF Bookmarks",
-  "version": "1.0",
-  "description": "Add bookmarks to the native Chrome PDF viewer",
+  "version": "2.0",
+  "description": "Add and manage multiple bookmarks in Chrome's native PDF viewer",
   "background": {
-	"scripts": ["background.js"],
-	"persistent": false
+    "service_worker": "background.js"
   },
   "options_page": "options.html",
   "permissions": [
-    "tabs","activeTab","declarativeContent","storage"
+    "storage",
+    "scripting",
+    "activeTab"
   ],
-  "browser_action": {
+  "host_permissions": [
+    "file://*/*.pdf",
+    "*://*/*.pdf",
+    "*://*/*"
+  ],
+  "action": {
     "default_popup": "popup.html",
-	"default_icon": {
+    "default_icon": {
       "16": "images/pdf-icon16.png",
       "32": "images/pdf-icon32.png",
       "48": "images/pdf-icon48.png",
       "128": "images/pdf-icon128.png"
     }
   },
+  "content_scripts": [
+    {
+      "matches": ["*://*/*.pdf", "*://*/*"],
+      "js": ["content.js"],
+      "run_at": "document_end",
+      "all_frames": true
+    }
+  ],
   "icons": {
     "16": "images/pdf-icon16.png",
     "32": "images/pdf-icon32.png",
     "48": "images/pdf-icon48.png",
     "128": "images/pdf-icon128.png"
   },
-  "manifest_version": 2
+  "manifest_version": 3
 }
