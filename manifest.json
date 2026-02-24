@@ -8,13 +8,7 @@
   "options_page": "options.html",
   "permissions": [
     "storage",
-    "scripting",
     "activeTab"
-  ],
-  "host_permissions": [
-    "file://*/*.pdf",
-    "*://*/*.pdf",
-    "*://*/*"
   ],
   "action": {
     "default_popup": "popup.html",
@@ -25,14 +19,6 @@
       "128": "images/pdf-icon128.png"
     }
   },
-  "content_scripts": [
-    {
-      "matches": ["*://*/*.pdf", "*://*/*"],
-      "js": ["content.js"],
-      "run_at": "document_end",
-      "all_frames": true
-    }
-  ],
   "icons": {
     "16": "images/pdf-icon16.png",
     "32": "images/pdf-icon32.png",
